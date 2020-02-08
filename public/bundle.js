@@ -9619,7 +9619,7 @@ module.exports = function (useSourceMap) {
       var content = cssWithMappingToString(item, useSourceMap);
 
       if (item[2]) {
-        return "@media ".concat(item[2], " {").concat(content, "}");
+        return "@media ".concat(item[2], "{").concat(content, "}");
       }
 
       return content;
@@ -9628,7 +9628,7 @@ module.exports = function (useSourceMap) {
   // eslint-disable-next-line func-names
 
 
-  list.i = function (modules, mediaQuery, dedupe) {
+  list.i = function (modules, mediaQuery) {
     if (typeof modules === 'string') {
       // eslint-disable-next-line no-param-reassign
       modules = [[null, modules, '']];
@@ -9636,34 +9636,30 @@ module.exports = function (useSourceMap) {
 
     var alreadyImportedModules = {};
 
-    if (dedupe) {
-      for (var i = 0; i < this.length; i++) {
-        // eslint-disable-next-line prefer-destructuring
-        var id = this[i][0];
+    for (var i = 0; i < this.length; i++) {
+      // eslint-disable-next-line prefer-destructuring
+      var id = this[i][0];
 
-        if (id != null) {
-          alreadyImportedModules[id] = true;
-        }
+      if (id != null) {
+        alreadyImportedModules[id] = true;
       }
     }
 
     for (var _i = 0; _i < modules.length; _i++) {
-      var item = [].concat(modules[_i]);
+      var item = modules[_i]; // skip already imported module
+      // this implementation is not 100% perfect for weird media query combinations
+      // when a module is imported multiple times with different media queries.
+      // I hope this will never occur (Hey this way we have smaller bundles)
 
-      if (dedupe && alreadyImportedModules[item[0]]) {
-        // eslint-disable-next-line no-continue
-        continue;
-      }
-
-      if (mediaQuery) {
-        if (!item[2]) {
+      if (item[0] == null || !alreadyImportedModules[item[0]]) {
+        if (mediaQuery && !item[2]) {
           item[2] = mediaQuery;
-        } else {
-          item[2] = "".concat(mediaQuery, " and ").concat(item[2]);
+        } else if (mediaQuery) {
+          item[2] = "(".concat(item[2], ") and (").concat(mediaQuery, ")");
         }
-      }
 
-      list.push(item);
+        list.push(item);
+      }
     }
   };
 
@@ -9682,7 +9678,7 @@ function cssWithMappingToString(item, useSourceMap) {
   if (useSourceMap && typeof btoa === 'function') {
     var sourceMapping = toComment(cssMapping);
     var sourceURLs = cssMapping.sources.map(function (source) {
-      return "/*# sourceURL=".concat(cssMapping.sourceRoot || '').concat(source, " */");
+      return "/*# sourceURL=".concat(cssMapping.sourceRoot).concat(source, " */");
     });
     return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
   }
@@ -28701,7 +28697,7 @@ var Calendar = function (_React$Component) {
       event.preventDefault();
       (0, _axios2.default)({
         method: 'get',
-        url: 'http://localhost:3001/:id/reservation/times',
+        url: 'http://3.15.229.220:3001/:id/reservation/times',
         params: {
           id: this.state.id,
           size: this.state.partySize,
@@ -29971,25 +29967,21 @@ module.exports = factory(
 /* 244 */
 /***/ (function(module, exports, __webpack_require__) {
 
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(36);
-exports = ___CSS_LOADER_API_IMPORT___(false);
+exports = module.exports = __webpack_require__(36)(false);
 // Module
 exports.push([module.i, "._15M1yaspuCxIU5XsyqyhjZ {\n  display: block;\n  width: 33%;\n  border: none;\n  padding: 0.4rem;\n  margin: 0.5rem;\n  text-decoration: none;\n  background: rgb(202, 70, 73);\n  color: #ffffff;\n  font-family: sans-serif;\n  font-size: 1rem;\n  cursor: pointer;\n  text-align: center;\n  transition: background 250ms ease-in-out, transform 150ms ease;\n  -webkit-appearance: none;\n  -moz-appearance: none;\n}\n\n._15M1yaspuCxIU5XsyqyhjZ:hover {\n  background: rgba(202, 70, 72, 0.523);\n  transition: 0.01s, ease;\n}\n", ""]);
 // Exports
 exports.locals = {
 	"timeButton": "_15M1yaspuCxIU5XsyqyhjZ"
 };
-module.exports = exports;
-
 
 /***/ }),
 /* 245 */
 /***/ (function(module, exports, __webpack_require__) {
 
+exports = module.exports = __webpack_require__(36)(false);
 // Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(36);
-exports = ___CSS_LOADER_API_IMPORT___(false);
+
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Alata|Khula:600|Mukta+Malar:600&display=swap);"]);
 // Module
 exports.push([module.i, "._3bp1KwfjmhznwTbKuctzuf {\n  position: absolute;\n  right: 6em;\n  display: block;\n  width: 20em;\n  margin: 5em;\n  text-align: center;\n  background-color: white;\n  padding: 10px;\n  box-shadow: 5px 10px 8px #888888;\n}\n\n._3oCfqNuJ-ARsZODaDU5lgd {\n  margin: 0;\n  padding: 0.1em;\n  font-family: \"Mukta Malar\", sans-serif;\n  font-size: 1.5em;\n  border-bottom: 2px solid rgb(230, 226, 226);\n}\n\n._3EoqyStajuL1rrpkKEO4FZ {\n  font-family: \"Khula\", sans-serif;\n  font-size: small;\n}\n\n._84AJu2_4-3CEIIhT6i20X {\n  padding: 2em;\n  font-family: \"Khula\", sans-serif;\n  font-size: small;\n  background-color: rgb(233, 233, 233);\n}\n\ninput {\n  border: none;\n}\n\nlabel {\n  display: inline-block;\n  text-align: left;\n  font-family: \"Khula\", sans-serif;\n}\n\n.T5PT3NY7kd6Zk8Li3yORO {\n  width: 20em;\n  padding-top: 1em;\n}\n\n._1pEHeuZQN67Ort7ePxam6h {\n  background: transparent;\n  border-bottom: 2px solid rgb(219, 218, 218);\n  outline: 0;\n  display: inline-block;\n  font-size: 0.8em;\n  width: 10em;\n  cursor: pointer;\n  text-decoration: none;\n}\n\nselect {\n  display: inline-block;\n  border: 0;\n  background: transparent;\n  border-bottom: 2px solid rgb(219, 218, 218);\n  outline: 0;\n  display: block;\n  text-align: left;\n  font-size: 0.95em;\n  text-decoration: none;\n  border-radius: 0px;\n  -webkit-appearance: none;\n}\n\nselect:hover {\n  border-bottom: 2px solid rgb(199, 82, 82);\n}\n\n._1pEHeuZQN67Ort7ePxam6h:hover {\n  border-bottom: 2px solid rgb(199, 82, 82);\n}\n\n._45F4P5v_LKtzi1BQO3gDF {\n  display: block;\n  width: 100%;\n  border: none;\n  padding: 1rem 2rem;\n  margin-top: 1em;\n  margin-bottom: 1em;\n  text-decoration: none;\n  background: rgb(202, 70, 73);\n  color: #ffffff;\n  font-family: sans-serif;\n  font-size: 1rem;\n  cursor: pointer;\n  text-align: center;\n  transition: background 250ms ease-in-out, transform 150ms ease;\n  -webkit-appearance: none;\n  -moz-appearance: none;\n}\n.RSAp_ec3G9bxw2VBje06L {\n  margin-top: 1em;\n}\n.rVjdCg9uIu7ng4RbU-SWp {\n  text-align: left;\n}\n\n._1PEWdKFp0ntNa3HaIFPP5p {\n  display: flex;\n}\n\n._2AkzcRdSx1rTgzV5ZwKE2P {\n  margin-top: 1em;\n  margin-left: 0.5em;\n  padding-right: 4em;\n  order: 1;\n  display: inline-block;\n  background: transparent;\n  outline: 0;\n  display: block;\n  text-align: left;\n  font-size: 0.95em;\n  text-decoration: none;\n  border-radius: 0px;\n}\n\n._3RNU0utBQn-MRqWVkF05hR {\n  margin-top: 1em;\n  margin-left: 0.5em;\n  padding-right: 4em;\n  order: 2;\n  display: inline-block;\n  background: transparent;\n  outline: 0;\n  text-align: left;\n  font-size: 0.95em;\n  text-decoration: none;\n  border-radius: 0px;\n}\n\n.CnaW99HC0OEEk_83xd8F- {\n  display: inline-flex;\n  width: 100%;\n  clear: both;\n}\n", ""]);
@@ -30009,24 +30001,18 @@ exports.locals = {
 	"item2": "_3RNU0utBQn-MRqWVkF05hR",
 	"btnContainer": "CnaW99HC0OEEk_83xd8F-"
 };
-module.exports = exports;
-
 
 /***/ }),
 /* 246 */
 /***/ (function(module, exports, __webpack_require__) {
 
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(36);
-exports = ___CSS_LOADER_API_IMPORT___(false);
+exports = module.exports = __webpack_require__(36)(false);
 // Module
 exports.push([module.i, ".react-datepicker__tether-element-attached-top\n  .react-datepicker__triangle, .react-datepicker__tether-element-attached-bottom\n  .react-datepicker__triangle, .react-datepicker__year-read-view--down-arrow, .react-datepicker__month-read-view--down-arrow {\n  margin-left: -8px;\n  position: absolute;\n}\n.react-datepicker__tether-element-attached-top\n  .react-datepicker__triangle, .react-datepicker__tether-element-attached-bottom\n  .react-datepicker__triangle, .react-datepicker__year-read-view--down-arrow, .react-datepicker__month-read-view--down-arrow, .react-datepicker__tether-element-attached-top\n  .react-datepicker__triangle::before, .react-datepicker__tether-element-attached-bottom\n  .react-datepicker__triangle::before, .react-datepicker__year-read-view--down-arrow::before, .react-datepicker__month-read-view--down-arrow::before {\n  box-sizing: content-box;\n  position: absolute;\n  border: 8px solid transparent;\n  height: 0;\n  width: 1px;\n}\n.react-datepicker__tether-element-attached-top\n  .react-datepicker__triangle::before, .react-datepicker__tether-element-attached-bottom\n  .react-datepicker__triangle::before, .react-datepicker__year-read-view--down-arrow::before, .react-datepicker__month-read-view--down-arrow::before {\n  content: \"\";\n  z-index: -1;\n  border-width: 8px;\n  left: -8px;\n  border-bottom-color: #aeaeae;\n}\n.react-datepicker__tether-element-attached-top\n  .react-datepicker__triangle {\n  top: 0;\n  margin-top: -8px;\n}\n.react-datepicker__tether-element-attached-top\n  .react-datepicker__triangle, .react-datepicker__tether-element-attached-top\n  .react-datepicker__triangle::before {\n  border-top: none;\n  border-bottom-color: #f0f0f0;\n}\n.react-datepicker__tether-element-attached-top\n  .react-datepicker__triangle::before {\n  top: -1px;\n  border-bottom-color: #aeaeae;\n}\n.react-datepicker__tether-element-attached-bottom\n  .react-datepicker__triangle, .react-datepicker__year-read-view--down-arrow, .react-datepicker__month-read-view--down-arrow {\n  bottom: 0;\n  margin-bottom: -8px;\n}\n.react-datepicker__tether-element-attached-bottom\n  .react-datepicker__triangle, .react-datepicker__year-read-view--down-arrow, .react-datepicker__month-read-view--down-arrow, .react-datepicker__tether-element-attached-bottom\n  .react-datepicker__triangle::before, .react-datepicker__year-read-view--down-arrow::before, .react-datepicker__month-read-view--down-arrow::before {\n  border-bottom: none;\n  border-top-color: #fff;\n}\n.react-datepicker__tether-element-attached-bottom\n  .react-datepicker__triangle::before, .react-datepicker__year-read-view--down-arrow::before, .react-datepicker__month-read-view--down-arrow::before {\n  bottom: -1px;\n  border-top-color: #aeaeae;\n}\n.react-datepicker {\n  font-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n  font-size: 0.8rem;\n  background-color: #fff;\n  color: #000;\n  border: 1px solid #aeaeae;\n  border-radius: 0.3rem;\n  display: inline-block;\n  position: relative;\n}\n.react-datepicker__triangle {\n  position: absolute;\n  left: 50px;\n}\n.react-datepicker__tether-element-attached-bottom.react-datepicker__tether-element {\n  margin-top: -20px;\n}\n.react-datepicker__header {\n  text-align: center;\n  background-color: #f0f0f0;\n  border-bottom: 1px solid #aeaeae;\n  border-top-left-radius: 0.3rem;\n  border-top-right-radius: 0.3rem;\n  padding-top: 8px;\n  position: relative;\n}\n.react-datepicker__year-dropdown-container--select, .react-datepicker__month-dropdown-container--select, .react-datepicker__year-dropdown-container--scroll, .react-datepicker__month-dropdown-container--scroll {\n  display: inline-block;\n  margin: 0 2px;\n}\n.react-datepicker__current-month {\n  margin-top: 0;\n  color: #000;\n  font-weight: bold;\n  font-size: 0.944rem;\n}\n.react-datepicker__navigation {\n  line-height: 1.7rem;\n  text-align: center;\n  cursor: pointer;\n  position: absolute;\n  top: 10px;\n  width: 0;\n  border: 0.45rem solid transparent;\n  z-index: 1;\n}\n.react-datepicker__navigation--previous {\n  left: 10px;\n  border-right-color: #ccc;\n}\n.react-datepicker__navigation--previous:hover {\n  border-right-color: #b3b3b3;\n}\n.react-datepicker__navigation--next {\n  right: 10px;\n  border-left-color: #ccc;\n}\n.react-datepicker__navigation--next:hover {\n  border-left-color: #b3b3b3;\n}\n.react-datepicker__navigation--years {\n  position: relative;\n  top: 0;\n  display: block;\n  margin-left: auto;\n  margin-right: auto;\n}\n.react-datepicker__navigation--years-previous {\n  top: 4px;\n  border-top-color: #ccc;\n}\n.react-datepicker__navigation--years-previous:hover {\n  border-top-color: #b3b3b3;\n}\n.react-datepicker__navigation--years-upcoming {\n  top: -4px;\n  border-bottom-color: #ccc;\n}\n.react-datepicker__navigation--years-upcoming:hover {\n  border-bottom-color: #b3b3b3;\n}\n.react-datepicker__month-container {\n  display: inline;\n  float: left;\n}\n.react-datepicker__month {\n  margin: 0.4rem;\n  text-align: center;\n}\n.react-datepicker__week-number {\n  color: #ccc;\n  display: inline-block;\n  width: 1.7rem;\n  line-height: 1.7rem;\n  text-align: center;\n  margin: 0.166rem;\n}\n.react-datepicker__day-name, .react-datepicker__day {\n  color: #000;\n  display: inline-block;\n  width: 1.7rem;\n  line-height: 1.7rem;\n  text-align: center;\n  margin: 0.166rem;\n}\n.react-datepicker__day {\n  cursor: pointer;\n}\n.react-datepicker__day:hover {\n  border-radius: 0.3rem;\n  background-color: #f0f0f0;\n}\n.react-datepicker__day--today {\n  font-weight: bold;\n}\n.react-datepicker__day--highlighted {\n  border-radius: 0.3rem;\n  background-color: #3dcc4a;\n  color: #fff;\n}\n.react-datepicker__day--highlighted:hover {\n  background-color: #32be3f;\n}\n.react-datepicker__day--selected, .react-datepicker__day--in-selecting-range, .react-datepicker__day--in-range {\n  border-radius: 0.3rem;\n  background-color: #e74c38;\n  color: #fff;\n}\n.react-datepicker__day--selected:hover, .react-datepicker__day--in-selecting-range:hover, .react-datepicker__day--in-range:hover {\n  background-color: #e74c38;\n}\n.react-datepicker__day--in-selecting-range:not(.react-datepicker__day--in-range) {\n  background-color: #e74c3870;\n}\n.eb2Bc5h7fKlX71QNE2RsH\n  .react-datepicker__day--in-range:not(.react-datepicker__day--in-selecting-range) {\n  background-color: #f0f0f0;\n  color: #000;\n}\n.react-datepicker__day--disabled {\n  cursor: default;\n  color: #ccc;\n}\n.react-datepicker__day--disabled:hover {\n  background-color: transparent;\n}\n.react-datepicker__input-container {\n  position: relative;\n  display: inline-block;\n}\n.react-datepicker__year-read-view, .react-datepicker__month-read-view {\n  border: 1px solid transparent;\n  border-radius: 0.3rem;\n}\n.react-datepicker__year-read-view:hover, .react-datepicker__month-read-view:hover {\n  cursor: pointer;\n}\n.react-datepicker__year-read-view:hover\n  .react-datepicker__year-read-view--down-arrow, .react-datepicker__year-read-view:hover\n  .react-datepicker__month-read-view--down-arrow, .react-datepicker__month-read-view:hover\n  .react-datepicker__year-read-view--down-arrow, .react-datepicker__month-read-view:hover\n  .react-datepicker__month-read-view--down-arrow {\n  border-top-color: #b3b3b3;\n}\n.react-datepicker__year-read-view--down-arrow, .react-datepicker__month-read-view--down-arrow {\n  border-top-color: #ccc;\n  float: right;\n  margin-left: 20px;\n  top: 8px;\n  position: relative;\n  border-width: 0.45rem;\n}\n.react-datepicker__year-dropdown, .react-datepicker__month-dropdown {\n  background-color: #f0f0f0;\n  position: absolute;\n  width: 50%;\n  left: 25%;\n  top: 30px;\n  text-align: center;\n  border-radius: 0.3rem;\n  border: 1px solid #aeaeae;\n}\n.react-datepicker__year-dropdown:hover, .react-datepicker__month-dropdown:hover {\n  cursor: pointer;\n}\n.react-datepicker__year-dropdown--scrollable, .react-datepicker__month-dropdown--scrollable {\n  height: 150px;\n  overflow-y: scroll;\n}\n.react-datepicker__year-option, .react-datepicker__month-option {\n  line-height: 20px;\n  width: 100%;\n  display: block;\n  margin-left: auto;\n  margin-right: auto;\n}\n.react-datepicker__year-option:first-of-type, .react-datepicker__month-option:first-of-type {\n  border-top-left-radius: 0.3rem;\n  border-top-right-radius: 0.3rem;\n}\n.react-datepicker__year-option:last-of-type, .react-datepicker__month-option:last-of-type {\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  border-bottom-left-radius: 0.3rem;\n  border-bottom-right-radius: 0.3rem;\n}\n.react-datepicker__year-option:hover, .react-datepicker__month-option:hover {\n  background-color: #ccc;\n}\n.react-datepicker__year-option:hover\n  .react-datepicker__navigation--years-upcoming, .react-datepicker__month-option:hover\n  .react-datepicker__navigation--years-upcoming {\n  border-bottom-color: #b3b3b3;\n}\n.react-datepicker__year-option:hover\n  .react-datepicker__navigation--years-previous, .react-datepicker__month-option:hover\n  .react-datepicker__navigation--years-previous {\n  border-top-color: #b3b3b3;\n}\n.react-datepicker__year-option--selected, .react-datepicker__month-option--selected {\n  position: absolute;\n  left: 15px;\n}\n.react-datepicker__close-icon {\n  background-color: transparent;\n  border: 0;\n  cursor: pointer;\n  display: inline-block;\n  height: 0;\n  outline: 0;\n  padding: 0;\n  vertical-align: middle;\n}\n.react-datepicker__close-icon::after {\n  background-color: #e74c38;\n  border-radius: 50%;\n  bottom: 0;\n  box-sizing: border-box;\n  color: #fff;\n  content: \"\\00d7\";\n  cursor: pointer;\n  font-size: 12px;\n  height: 16px;\n  width: 16px;\n  line-height: 1;\n  margin: -8px auto 0;\n  padding: 2px;\n  position: absolute;\n  right: 7px;\n  text-align: center;\n  top: 50%;\n}\n.react-datepicker__today-button {\n  background: #f0f0f0;\n  border-top: 1px solid #aeaeae;\n  cursor: pointer;\n  text-align: center;\n  font-weight: bold;\n  padding: 5px 0;\n  clear: left;\n}\n.react-datepicker__tether-element {\n  z-index: 2147483647;\n}\n.react-datepicker__portal {\n  position: fixed;\n  width: 100vw;\n  height: 100vh;\n  background-color: rgba(0, 0, 0, 0.8);\n  left: 0;\n  top: 0;\n  justify-content: center;\n  align-items: center;\n  display: flex;\n  z-index: 2147483647;\n}\n.react-datepicker__portal .react-datepicker__day-name, .react-datepicker__portal .react-datepicker__day {\n  width: 3rem;\n  line-height: 3rem;\n}\n@media (max-width: 400px), (max-height: 550px) {\n  .react-datepicker__portal .react-datepicker__day-name, .react-datepicker__portal .react-datepicker__day {\n    width: 2rem;\n    line-height: 2rem;\n  }\n}\n.react-datepicker__portal .react-datepicker__current-month {\n  font-size: 1.44rem;\n}\n.react-datepicker__portal .react-datepicker__navigation {\n  border: 0.81rem solid transparent;\n}\n.react-datepicker__portal .react-datepicker__navigation--previous {\n  border-right-color: #ccc;\n}\n.react-datepicker__portal\n  .react-datepicker__navigation--previous:hover {\n  border-right-color: #b3b3b3;\n}\n.react-datepicker__portal .react-datepicker__navigation--next {\n  border-left-color: #ccc;\n}\n.react-datepicker__portal .react-datepicker__navigation--next:hover {\n  border-left-color: #b3b3b3;\n}\n", ""]);
 // Exports
 exports.locals = {
 	"react-datepicker__month--selecting-range": "eb2Bc5h7fKlX71QNE2RsH"
 };
-module.exports = exports;
-
 
 /***/ }),
 /* 247 */

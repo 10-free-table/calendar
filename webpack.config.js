@@ -1,3 +1,5 @@
+
+
 const path = require('path');
 const SRC_DIR = path.join(__dirname, '/src');
 const DIST_DIR = path.join(__dirname, '/public');
@@ -10,7 +12,8 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.jsx?/,
+                test: /\js|jsx?/,
+		exclude: /node_modules/,
                 include: SRC_DIR,
                 loader: 'babel-loader',
                 query: {
@@ -19,6 +22,7 @@ module.exports = {
             },
             {
                 test: /\.css$/,
+		exclude: /node_modules/,
                 use: [
                     'style-loader',
                     {
@@ -31,5 +35,8 @@ module.exports = {
                 ]
             }
         ]
-    }
-};
+    },
+	 resolve: {
+    extensions: ['.js', '.json', '.jsx', '.css']
+  }
+}

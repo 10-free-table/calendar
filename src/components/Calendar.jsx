@@ -44,7 +44,7 @@ class Calendar extends React.Component {
     event.preventDefault();
     axios({
       method: 'get',
-      url: 'http://localhost:3001/:id/reservation/times',
+      url: 'http://3.15.229.220:3001/:id/reservation/times',
       params: {
         id: this.state.id,
         size: this.state.partySize,
