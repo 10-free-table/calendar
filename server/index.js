@@ -15,7 +15,6 @@ app.use('/:id', express.static('public'));
 
 app.get('/:id/reservation/times', (req, res) => {
   const reservation = (req.query);
-  console.log(reservation);
   // requested party size
   const partySize = reservation.size;
   const id = reservation.id;
