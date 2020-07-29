@@ -1,6 +1,6 @@
 # calendar (reservations) component for free table application
 
-## run:
+## run
 
 npm start
 
