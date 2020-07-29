@@ -7,4 +7,4 @@ npm start
 ## populate the database
 
 npm seed
-file: ![alt-text](Demo GIF-source.gif)
+file: ![alt-text](Demo%20GIF-source.gif)
