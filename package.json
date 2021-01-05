@@ -38,7 +38,7 @@
     "@babel/preset-env": "^7.8.3",
     "@babel/preset-react": "^7.8.3",
     "ajax": "0.0.4",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "babel-core": "^6.26.3",
     "babel-loader": "^6.3.2",
     "babel-plugin-transform-export-extensions": "^6.22.0",
